@@ -7,9 +7,13 @@ export default function Sidebar({
   activeChatId,
   onSelectChat,
   onNewChat,
-  refreshTrigger
+  refreshTrigger,
+  isOpen: propIsOpen,
+  onToggle: propOnToggle
 }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [internalOpen, setInternalOpen] = useState(true);
+  const isOpen = propIsOpen !== undefined ? propIsOpen : internalOpen;
+  const toggleSidebar = propOnToggle || (() => setInternalOpen(prev => !prev));
   const [search, setSearch] = useState('');
   const [chats, setChats] = useState([]);
 
@@ -53,7 +57,7 @@ export default function Sidebar({
           {isOpen && <span>New Chat</span>}
         </button>
 
-        <button className="btn-toggle" onClick={() => setIsOpen(!isOpen)} title="Toggle sidebar">
+        <button className="btn-toggle" onClick={toggleSidebar} title="Toggle sidebar">
           {isOpen ? '◀' : '▶'}
         </button>
       </div>

@@ -2,10 +2,29 @@ import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import ChatWindow from './components/ChatWindow.jsx';
+import SettingsModal from './components/ui/SettingsModal.jsx';
+import ProfileModal from './components/ui/ProfileModal.jsx';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export default function App() {
+  // Theme State: 'dark' | 'light'
+  const [theme, setTheme] = useState(() => localStorage.getItem('zenith_theme') || 'dark');
+
+  // Apply data-theme attribute on document root
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('zenith_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  // Modals state
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   // Session States
   const [token, setToken] = useState(() => localStorage.getItem('token') || null);
   const [user, setUser] = useState(() => {
@@ -17,7 +36,7 @@ export default function App() {
   const [view, setView] = useState(() => (localStorage.getItem('token') || localStorage.getItem('isGuest') === 'true') ? 'workspace' : 'landing');
 
   // Auth Form State
-  const [authMode, setAuthMode] = useState('login'); // 'login' or 'signup'
+  const [authMode, setAuthMode] = useState('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,6 +47,9 @@ export default function App() {
   const [messages, setMessages] = useState([]);
   const [isSending, setIsSending] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  // Sidebar toggle state passed down
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const canvasRef = useRef(null);
 
@@ -70,7 +92,7 @@ export default function App() {
         // Draw Dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(16, 163, 127, 0.6)';
+        ctx.fillStyle = theme === 'dark' ? 'rgba(16, 163, 127, 0.6)' : 'rgba(5, 150, 105, 0.5)';
         ctx.fill();
 
         // Draw Lines between close dots
@@ -81,7 +103,9 @@ export default function App() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(16, 163, 127, ${0.2 * (1 - dist / 110)})`;
+            ctx.strokeStyle = theme === 'dark' 
+              ? `rgba(16, 163, 127, ${0.2 * (1 - dist / 110)})`
+              : `rgba(5, 150, 105, ${0.2 * (1 - dist / 110)})`;
             ctx.stroke();
           }
         }
@@ -91,7 +115,7 @@ export default function App() {
 
     animate();
     return () => cancelAnimationFrame(frameId);
-  }, [view]);
+  }, [view, theme]);
 
   // --------------------------------------------------------------------------
   // Auth Functions
@@ -221,7 +245,20 @@ export default function App() {
   if (view === 'workspace') {
     return (
       <div className="app-layout">
-        <Navbar user={user} isGuest={isGuest} onLogout={handleLogout} />
+        {/* Global Navbar with integrated Dock */}
+        <Navbar 
+          user={user} 
+          isGuest={isGuest} 
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          onNewChat={handleNewChat}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenProfile={() => setIsProfileOpen(true)}
+          onCheckWeather={() => handleSendMessage("How is the weather today?")}
+          onLogout={handleLogout} 
+        />
+
+        {/* Main Workspace Body */}
         <div className="main-content">
           <Sidebar
             isGuest={isGuest}
@@ -231,6 +268,8 @@ export default function App() {
             onSelectChat={handleSelectChat}
             onNewChat={handleNewChat}
             refreshTrigger={refreshTrigger}
+            isOpen={isSidebarOpen}
+            onToggle={() => setIsSidebarOpen(prev => !prev)}
           />
           <ChatWindow
             messages={messages}
@@ -240,6 +279,24 @@ export default function App() {
             user={user}
           />
         </div>
+
+        {/* Settings Modal Dialog */}
+        <SettingsModal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          apiUrl={API_URL}
+        />
+
+        {/* Profile Modal Dialog */}
+        <ProfileModal
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+          user={user}
+          isGuest={isGuest}
+          onLogout={handleLogout}
+        />
       </div>
     );
   }
@@ -247,6 +304,18 @@ export default function App() {
   return (
     <div className="landing">
       <canvas ref={canvasRef} className="canvas" />
+
+      {/* Floating Theme Switcher on Landing Page */}
+      <div style={{ position: 'fixed', top: 16, right: 16, zIndex: 50 }}>
+        <button 
+          className="dock-btn" 
+          onClick={toggleTheme} 
+          title={theme === 'dark' ? "Light Mode" : "Dark Mode"}
+          style={{ width: 38, height: 38 }}
+        >
+          {theme === 'dark' ? <Sun size={17} color="#facc15" /> : <Moon size={17} color="#818cf8" />}
+        </button>
+      </div>
 
       <div className="landing-box">
         {view === 'landing' ? (
