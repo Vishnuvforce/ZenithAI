@@ -1,6 +1,6 @@
-# 🌟 ZenithAI — Full-Stack MERN Chatbot
+# 🌟 ZenithAI v2.5 — Full-Stack MERN Conversational Platform
 
-AI chatbot that runs on the **MERN Stack** (MongoDB Atlas, Express.js, React.js, Node.js) with clean modular architecture, pure Vanilla CSS, and modern React hooks.
+An intelligent AI chatbot running on the **MERN Stack** (MongoDB Atlas, Express.js, React.js 18, Node.js) featuring pure Vanilla CSS, dual-theme engine (Dark & Light), real-time weather & time integrations, and isolated frontend/backend directories for seamless cloud deployment.
 
 ---
 
