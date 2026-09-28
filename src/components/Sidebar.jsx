@@ -86,7 +86,7 @@ export default function Sidebar({
           ) : (
             <div className="chat-list">
               {chats.length === 0 ? (
-                <div style={{ padding: '16px 8px', fontSize: '12px', color: '#666', textAlign: 'center' }}>
+                <div style={{ padding: '16px 8px', fontSize: '12.5px', color: 'var(--text-muted)', textAlign: 'center' }}>
                   No saved conversations yet.
                 </div>
               ) : (

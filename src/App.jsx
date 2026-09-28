@@ -309,12 +309,12 @@ export default function App() {
       {/* Floating Theme Switcher on Landing Page */}
       <div style={{ position: 'fixed', top: 16, right: 16, zIndex: 50 }}>
         <button 
-          className="dock-btn" 
+          className="floating-theme-btn" 
           onClick={toggleTheme} 
-          title={theme === 'dark' ? "Light Mode" : "Dark Mode"}
-          style={{ width: 38, height: 38 }}
+          title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          aria-label="Toggle Theme"
         >
-          {theme === 'dark' ? <Sun size={17} color="#facc15" /> : <Moon size={17} color="#818cf8" />}
+          {theme === 'dark' ? <Sun size={18} color="#facc15" /> : <Moon size={18} color="#4f46e5" />}
         </button>
       </div>
 

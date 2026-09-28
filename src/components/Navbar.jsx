@@ -44,7 +44,7 @@ export default function Navbar({
           onClick={onNewChat} 
           title="New Chat"
         >
-          <MessageSquarePlus size={17} color="#10a37f" />
+          <MessageSquarePlus size={17} color={theme === 'dark' ? "#10a37f" : "#059669"} />
           <span className="dock-tooltip">New Chat</span>
         </button>
 
@@ -54,7 +54,7 @@ export default function Navbar({
           onClick={onCheckWeather} 
           title="Live Weather"
         >
-          <CloudSun size={17} color="#38bdf8" />
+          <CloudSun size={17} color={theme === 'dark' ? "#38bdf8" : "#0284c7"} />
           <span className="dock-tooltip">Live Weather</span>
         </button>
 
@@ -70,7 +70,7 @@ export default function Navbar({
           {theme === 'dark' ? (
             <Sun size={17} color="#facc15" />
           ) : (
-            <Moon size={17} color="#818cf8" />
+            <Moon size={17} color="#4f46e5" />
           )}
           <span className="dock-tooltip">{theme === 'dark' ? "Light Mode" : "Dark Mode"}</span>
         </button>
@@ -81,7 +81,7 @@ export default function Navbar({
           onClick={onOpenSettings} 
           title="Settings"
         >
-          <Cog size={17} />
+          <Cog size={17} color={theme === 'dark' ? "#a1a1aa" : "#475569"} />
           <span className="dock-tooltip">Settings</span>
         </button>
 
@@ -92,9 +92,9 @@ export default function Navbar({
           title="User Profile"
         >
           {isGuest ? (
-            <ShieldCheck size={17} color="#facc15" />
+            <ShieldCheck size={17} color={theme === 'dark' ? "#facc15" : "#d97706"} />
           ) : (
-            <UserIcon size={17} color="#10a37f" />
+            <UserIcon size={17} color={theme === 'dark' ? "#10a37f" : "#059669"} />
           )}
           <span className="profile-label">
             {isGuest ? 'Guest' : (user?.email?.split('@')[0] || 'Profile')}
@@ -111,7 +111,7 @@ export default function Navbar({
           onClick={onLogout} 
           title={isGuest ? "Exit Guest Mode" : "Log Out"}
         >
-          <LogOut size={16} />
+          <LogOut size={16} color={theme === 'dark' ? "#f87171" : "#dc2626"} />
           <span className="dock-tooltip">{isGuest ? "Exit" : "Log out"}</span>
         </button>
       </div>

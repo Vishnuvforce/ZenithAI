@@ -19,7 +19,7 @@ function FormatText({ text }) {
               <div className="code-header">
                 <span>{lang}</span>
                 <button 
-                  style={{ background: 'none', border: 'none', color: '#999', cursor: 'pointer', fontSize: '11px' }}
+                  style={{ background: 'none', border: 'none', color: 'var(--accent-green)', cursor: 'pointer', fontSize: '11.5px', fontWeight: 600 }}
                   onClick={() => navigator.clipboard.writeText(code)}
                 >
                   Copy
