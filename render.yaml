@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ZenithAI
+    env: node
+    # Your fixed build and start commands go here
+    buildCommand: npm install --prefix frontend && npm run build --prefix frontend && npm install --prefix backend
+    startCommand: cd backend && node server.js
