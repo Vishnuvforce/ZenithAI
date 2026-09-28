@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { BorderBeam } from './ui/border-beam-search';
 
 // Simple markdown formatter for AI answers from MongoDB Atlas
 function FormatText({ text }) {
@@ -130,21 +131,23 @@ export default function ChatWindow({ messages, onSendMessage, isSending, isGuest
         )}
       </div>
 
-      {/* Input Field with Upward Arrow (↑) Submit Button */}
+      {/* Input Field with BorderBeam Animated Glow */}
       <footer className="input-bar">
-        <form className="input-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="chat-input"
-            placeholder="Message ZenithAI..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            disabled={isSending}
-          />
-          <button type="submit" className="send-btn" disabled={!input.trim() || isSending}>
-            ↑
-          </button>
-        </form>
+        <BorderBeam size="line" colorVariant="colorful" duration={3.1} borderRadius={24}>
+          <form className="input-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="chat-input"
+              placeholder="Message ZenithAI..."
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              disabled={isSending}
+            />
+            <button type="submit" className="send-btn" disabled={!input.trim() || isSending}>
+              ↑
+            </button>
+          </form>
+        </BorderBeam>
         <div className="disclaimer">
           ZenithAI fetches answers directly from MongoDB Atlas.
         </div>
