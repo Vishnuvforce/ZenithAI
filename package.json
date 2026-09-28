@@ -2,21 +2,12 @@
   "name": "zenith-chatbot",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "description": "ZenithAI — Full-Stack MERN Conversational Platform",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "server": "npm start --prefix backend"
-  },
-  "dependencies": {
-    "border-beam": "^1.4.1",
-    "lucide-react": "^1.48.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.4.2"
+    "dev": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "server": "npm start --prefix backend",
+    "start": "npm start --prefix backend",
+    "install:all": "npm install --prefix frontend && npm install --prefix backend"
   }
 }
