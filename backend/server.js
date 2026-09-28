@@ -304,6 +304,11 @@ app.post('/api/chat', verifyToken, async (req, res) => {
   }
 });
 
+// Add this route handler
+app.get('/', (req, res) => {
+    res.send('Server is up and running successfully!');
+});
+
 // Get User Chats from MongoDB Atlas (With Regex Search)
 app.get('/api/chats', verifyToken, async (req, res) => {
   try {
