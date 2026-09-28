@@ -1,5 +1,6 @@
 # Environment variables (Sensitive secrets)
 .env
+.env.example
 .env.local
 .env.*.local
 

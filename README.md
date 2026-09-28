@@ -26,7 +26,6 @@ AI chatbot that runs on the **MERN Stack** (MongoDB Atlas, Express.js, React.js,
 
 ```
 ZenithAI/
-├── .env.example                 # Example configuration template
 ├── .gitignore                   # Ignores .env and node_modules
 ├── package.json                 # Monorepo scripts (dev, build, server, install:all)
 ├── package-lock.json            # Root dependency lockfile
