@@ -90,6 +90,6 @@ This repository includes a Render Blueprint (`render.yaml`) for deploying the fr
 
 1. Push the repository to GitHub and create a new Blueprint in Render using that repository.
 2. Set the `MONGO_URI` environment variable to your MongoDB Atlas connection string when prompted. Render generates `JWT_SECRET` automatically.
-3. Deploy. Render installs both apps, builds the frontend, and starts the Express server, which serves the app and `/api` routes on the same domain.
+3. Deploy. The build installs both apps and builds the frontend; the Express server then serves the app and `/api` routes on the same domain.
 
 For local development, create `.env` in the repository root with `MONGO_URI` and `JWT_SECRET`, then run `npm run install:all`, `npm run server`, and `npm run dev` in separate terminals. Vite uses `localhost:5000` for the local API automatically.
