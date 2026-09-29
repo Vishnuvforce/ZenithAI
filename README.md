@@ -84,16 +84,12 @@ VITE_API_URL=http://localhost:5000/api
 
 ---
 
-## 🌐 Easy Deployment Guide
+## 🌐 Deploy to Render
 
-- **Frontend Deployment (Vercel / Netlify):**
-  - **Root Directory:** `frontend`
-  - **Build Command:** `npm run build`
-  - **Output Directory:** `dist`
-  - **Environment Variables:** `VITE_API_URL=https://your-backend.onrender.com/api`
+This repository includes a Render Blueprint (`render.yaml`) for deploying the frontend and API together as one web service.
 
-- **Backend Deployment (Render / Railway):**
-  - **Root Directory:** `backend`
-  - **Build Command:** `npm install`
-  - **Start Command:** `node server.js`
-  - **Environment Variables:** `MONGO_URI`, `JWT_SECRET`, `PORT=5000`
+1. Push the repository to GitHub and create a new Blueprint in Render using that repository.
+2. Set the `MONGO_URI` environment variable to your MongoDB Atlas connection string when prompted. Render generates `JWT_SECRET` automatically.
+3. Deploy. Render installs both apps, builds the frontend, and starts the Express server, which serves the app and `/api` routes on the same domain.
+
+For local development, create `.env` in the repository root with `MONGO_URI` and `JWT_SECRET`, then run `npm run install:all`, `npm run server`, and `npm run dev` in separate terminals. Vite uses `localhost:5000` for the local API automatically.

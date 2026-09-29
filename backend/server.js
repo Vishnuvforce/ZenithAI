@@ -3,6 +3,7 @@
 // ==============================================================================
 
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
+const path = require('path');
 
 // Windows DNS fix so MongoDB Atlas SRV record always resolves
 const dns = require('dns');
@@ -304,11 +305,6 @@ app.post('/api/chat', verifyToken, async (req, res) => {
   }
 });
 
-// Add this route handler
-app.get('/', (req, res) => {
-    res.send('Server is up and running successfully!');
-});
-
 // Get User Chats from MongoDB Atlas (With Regex Search)
 app.get('/api/chats', verifyToken, async (req, res) => {
   try {
@@ -349,6 +345,17 @@ app.delete('/api/chats/:id', verifyToken, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+const frontendDist = path.resolve(__dirname, '../frontend/dist');
+app.use(express.static(frontendDist));
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  res.sendFile(path.join(frontendDist, 'index.html'), err => {
+    if (err) next(err);
+  });
 });
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+}
